@@ -2,6 +2,7 @@ package reader
 
 import (
 	"encoding/json"
+	"fmt"
 	"log/slog"
 
 	"github.com/arielcr/c64-diagnostic/internal/diagnostics"
@@ -25,28 +26,29 @@ func NewJsonReader(logger *slog.Logger) *JsonReader {
 	return &newJsonReader
 }
 
-func (r *JsonReader) Query(status diagnostics.DiagnosticStatus) (diagnostics.Diagnostic, error) {
+func (r *JsonReader) GetStep(diagnostic string, stepNumber int) (diagnostics.Step, error) {
+	result := r.jq.Reset().From("diagnostics."+diagnostic).Where("step", "=", stepNumber).First()
 
-	currentDiagnostic := "diagnostics." + status.CurrentDiagnostic
+	step, err := r.ParseStepFromJSON(result)
+	if err != nil {
+		return diagnostics.Step{}, err
+	}
 
-	result := r.jq.From(currentDiagnostic).Where("step", "=", status.CurrentStep).First()
+	return step, nil
+}
 
+func (r *JsonReader) ParseStepFromJSON(data interface{}) (diagnostics.Step, error) {
 	var step diagnostics.Step
 
-	jsonString, err := json.Marshal(result)
+	jsonString, err := json.Marshal(data)
 	if err != nil {
-		r.logger.Error(err.Error())
-		return diagnostics.Diagnostic{}, err
+		return diagnostics.Step{}, fmt.Errorf("failed to marshal to JSON: %w", err)
 	}
 
 	err = json.Unmarshal(jsonString, &step)
 	if err != nil {
-		r.logger.Error(err.Error())
-		return diagnostics.Diagnostic{}, err
+		return diagnostics.Step{}, fmt.Errorf("failed to unmarshal JSON: %w", err)
 	}
 
-	r.logger.Info("LA CATEGORIA DEL STEP", "cat", step.Category)
-
-	return diagnostics.Diagnostic{}, nil
-
+	return step, nil
 }

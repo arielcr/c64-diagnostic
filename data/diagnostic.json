@@ -1,92 +1,92 @@
 {
     "diagnostic_status": {
-        "current_diagnostic": "precheck",
-        "current_step": 1,
-        "in_progress": false,
+        "diagnostic": "precheck",
+        "step": 1,
+        "result": "",
         "results": {
             "precheck": {
-                "1":false,
-                "2":false,
-                "3":false,
-                "4":false,
-                "5":false,
-                "6":false,
-                "7":false,
-                "8":false,
-                "9":false,
-                "10":false,
-                "11":false
+                "1":"",
+                "2":"",
+                "3":"",
+                "4":"",
+                "5":"",
+                "6":"",
+                "7":"",
+                "8":"",
+                "9":"",
+                "10":"",
+                "11":""
             },
             "system_power_supply": {
-                "1":false,
-                "2":false,
-                "3":false,
-                "4":false,
-                "5":false,
-                "6":false,
-                "7":false,
-                "8":false,
-                "9":false,
-                "10":false
+                "1":"",
+                "2":"",
+                "3":"",
+                "4":"",
+                "5":"",
+                "6":"",
+                "7":"",
+                "8":"",
+                "9":"",
+                "10":""
             },
             "system_reset": {
-                "1":false,
-                "2":false
+                "1":"",
+                "2":""
             },
             "system_clocks": {
-                "1":false,
-                "2":false,
-                "3":false,
-                "4":false,
-                "5":false,
-                "6":false,
-                "7":false,
-                "8":false,
-                "9":false,
-                "10":false
+                "1":"",
+                "2":"",
+                "3":"",
+                "4":"",
+                "5":"",
+                "6":"",
+                "7":"",
+                "8":"",
+                "9":"",
+                "10":""
             },
             "system_video": {
-                "1":false,
-                "2":false,
-                "3":false,
-                "4":false,
-                "5":false,
-                "6":false,
-                "7":false
+                "1":"",
+                "2":"",
+                "3":"",
+                "4":"",
+                "5":"",
+                "6":"",
+                "7":""
             },
             "system_ram": {
-                "1":false,
-                "2":false,
-                "3":false,
-                "3.1":false,
-                "4":false,
-                "5":false,
-                "6":false,
-                "7":false,
-                "7.1":false,
-                "7.2":false,
-                "7.3":false,
-                "7.4":false,
-                "8":false,
-                "9":false,
-                "9.1":false,
-                "9.2":false
+                "1":"",
+                "2":"",
+                "3":"",
+                "3.1":"",
+                "4":"",
+                "5":"",
+                "6":"",
+                "7":"",
+                "7.1":"",
+                "7.2":"",
+                "7.3":"",
+                "7.4":"",
+                "8":"",
+                "9":"",
+                "9.1":"",
+                "9.2":""
             },
             "system_rom_io": {
-                "1":false,
-                "2":false,
-                "3":false,
-                "4":false,
-                "5":false,
-                "6":false,
-                "7":false,
-                "8":false,
-                "8.1":false,
-                "9":false,
-                "10":false,
-                "11":false,
-                "12":false,
-                "13":false
+                "1":"",
+                "2":"",
+                "3":"",
+                "4":"",
+                "5":"",
+                "6":"",
+                "7":"",
+                "8":"",
+                "8.1":"",
+                "9":"",
+                "10":"",
+                "11":"",
+                "12":"",
+                "13":""
             }
         }
       },  
@@ -103,6 +103,7 @@
         "precheck": [
             {
                 "step": 1,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the signal on pin 24 of IC U5 equal to +5V DC?",
@@ -125,9 +126,10 @@
             },
             {
                 "step": 2,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
-                "question": "Is the signal on pin 40 of IC U19 equal to +5V DC?",
+                "test": "Is the signal on pin 40 of IC U19 equal to +5V DC?",
                 "error": {
                     "next": {
                         "category": "system_power_supply",
@@ -147,6 +149,7 @@
             },
             {
                 "step": 3,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the signal on pin 13 of IC U19 equal to +12V DC?",
@@ -169,6 +172,7 @@
             },
             {
                 "step": 4,
+                "type": "precheck",
                 "category": "Signals on System Power Up",
                 "description": "",
                 "test": "Is the RESET signal on pin 40 of IC U7 equal to 0V DC on System Power Up to +5V DC in approximately 1 second?",
@@ -191,6 +195,7 @@
             },
             {
                 "step": 5,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the ØCOLOR signal on pin 21 of IC U19 equal to 14.3 MHZ?",
@@ -213,6 +218,7 @@
             },
             {
                 "step": 6,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the ØIN signal on pin 22 of IC U19 equal to 8.18 MHZ?",
@@ -235,6 +241,7 @@
             },
             {
                 "step": 7,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the ØOIN signal on pin 1 of IC U7 equal to 1.0 MHZ?",
@@ -257,6 +264,7 @@
             },
             {
                 "step": 8,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the Ø2 signal on pin 39 of IC U7 equal to 1.0 MHZ?",
@@ -279,6 +287,7 @@
             },
             {
                 "step": 9,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the COMPOSITE signal on pin 4 of connector CN5 approximately +2V DC Composite?",
@@ -301,6 +310,7 @@
             },
             {
                 "step": 10,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the LUMINANCE signal on pin 1 of connector CN5 approximately +1V DC Luminance?",
@@ -323,6 +333,7 @@
             },
             {
                 "step": 11,
+                "type": "precheck",
                 "category": "Basic System Checks",
                 "description": "",
                 "test": "Is the COLOR signal on pin 6 of connector CN5 approximately +1V DC Color?",
@@ -347,6 +358,7 @@
         "system_power_supply": [
             {
                 "step": 1,
+                "type": "system_power_supply",
                 "category": "Basic System Checks", 
                 "description": "INCORRECT + 5 VDC CAN SUPPLY",
                 "test": "Is the output signal on pin 2 of voltage regulator VR2 equal to +5V DC?",
@@ -360,8 +372,8 @@
                 },
                 "success": {
                     "next": {
-                        "category": false,
-                        "step": false
+                        "category": "",
+                        "step": 0
 
                     },
                     "diagnostic": "Supply OK, Open Trace"
@@ -371,13 +383,14 @@
         "system_reset": [
             {
                 "step": 1,
+                "type": "system_reset",
                 "category": "Basic System Checks", 
                 "description": "INCORRECT SYSTEM RESET",
                 "test": "Is the output signal on pin 9 of IC U20 equal to +5V DC on System Power Up to 0V DC in approximately 1 second?",
                 "error": {
                     "next": {
-                        "category": false,
-                        "step": false
+                        "category": "",
+                        "step": 0
 
                     },
                     "diagnostic": "Defective U20, C24, C105, R34"
@@ -395,13 +408,14 @@
         "system_clocks": [ 
             {
                 "step": 1,
+                "type": "system_clocks",
                 "category": "Basic System Checks", 
                 "description": "INCORRECT SYSTEM CLOCKS",
                 "test": "Is the input signal on pin 13 of IC U31 equal to 14.3 MHZ?",
                 "error": {
                     "next": {
-                        "category": false,
-                        "step": false
+                        "category": "",
+                        "step": 0
 
                     },
                     "diagnostic": "Defective Y1, U31"
@@ -419,6 +433,7 @@
         "system_video": [
             {
                 "step": 1,
+                "type": "system_video",
                 "category": "Basic System Checks", 
                 "description": "INCORRECT SYSTEM VIDEO",
                 "test": "Is the SYNC/LUM signal on pin 15 of IC U19 equal to +5V DC Composite?",
@@ -443,6 +458,7 @@
         "system_ram": [
             {
                 "step": 1,
+                "type": "system_ram",
                 "category": "Basic System Checks", 
                 "description": "SYSTEM RAM CIRCUITRY",
                 "test": "With power applied to the system, feel ICs U9-U12, U21-U24. One or more are extremely hot?",
@@ -456,8 +472,8 @@
                 },
                 "success": {
                     "next": {
-                        "category": false,
-                        "step": false
+                        "category": "",
+                        "step": 0
 
                     },
                     "diagnostic": "Replace Hot ICs"
@@ -467,6 +483,7 @@
         "system_rom_io": [
             {
                 "step": 1,
+                "type": "system_rom_io",
                 "category": "Signals on System Power Up", 
                 "description": "SYSTEM ROM SELECTION AND I/O DECODING",
                 "test": "Is the CHAR ROM SELECT signal on pin 15 of IC U17 equal to +5V DC with negative pulse?",
@@ -480,8 +497,8 @@
                 },
                 "success": {
                     "next": {
-                        "category": false,
-                        "step": false
+                        "category": "",
+                        "step": 0
 
                     },
                     "diagnostic": "Defective U17, U5"

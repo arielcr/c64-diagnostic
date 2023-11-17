@@ -2,10 +2,12 @@ package diagnostics
 
 import (
 	"log/slog"
+
+	"github.com/arielcr/c64-diagnostic/internal/constants"
 )
 
 type Reader interface {
-	Query(status DiagnosticStatus) (Diagnostic, error)
+	GetStep(diagnostic string, step int) (Step, error)
 }
 
 type Service struct {
@@ -22,9 +24,33 @@ func NewService(reader Reader, logger *slog.Logger) *Service {
 	return &newService
 }
 
-func (s *Service) Query(status DiagnosticStatus) (Diagnostic, error) {
+func (s *Service) GetNextStep(status DiagnosticStatus) (Step, error) {
+	s.Logger.Info("Service > GetNextStep", "status", status)
 
-	result, _ := s.Reader.Query(status)
+	step, err := s.Reader.GetStep(status.Diagnostic, status.Step)
+	if err != nil {
+		return Step{}, err
+	}
 
-	return result, nil
+	if status.Result == "" {
+		return step, nil
+	}
+
+	if status.Result == constants.Yes {
+		nextStep, err := s.Reader.GetStep(step.Success.Next.Category, step.Success.Next.Step)
+		if err != nil {
+			return Step{}, err
+		}
+		return nextStep, nil
+	}
+
+	if status.Result == constants.No {
+		nextStep, err := s.Reader.GetStep(step.Error.Next.Category, step.Error.Next.Step)
+		if err != nil {
+			return Step{}, err
+		}
+		return nextStep, nil
+	}
+
+	return Step{}, nil
 }
