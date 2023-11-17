@@ -5,6 +5,16 @@ type Diagnostic struct {
 	Title string `json:"title" validate:"required"`
 }
 
+type DiagnosticMeta struct {
+	Precheck          string `json:"precheck"`
+	SystemPowerSupply string `json:"system_power_supply"`
+	SystemReset       string `json:"system_reset"`
+	SystemClocks      string `json:"system_clocks"`
+	SystemVideo       string `json:"system_video"`
+	SystemRAM         string `json:"system_ram"`
+	SystemRomIo       string `json:"system_rom_io"`
+}
+
 type Step struct {
 	Step        int     `json:"step"`
 	Type        string  `json:"type"`

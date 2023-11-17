@@ -8,6 +8,7 @@ import (
 
 type Reader interface {
 	GetStep(diagnostic string, step int) (Step, error)
+	GetDiagnosticMeta() (DiagnosticMeta, error)
 }
 
 type Service struct {
@@ -53,4 +54,13 @@ func (s *Service) GetNextStep(status DiagnosticStatus) (Step, error) {
 	}
 
 	return Step{}, nil
+}
+
+func (s *Service) GetMetaData() (DiagnosticMeta, error) {
+	meta, err := s.Reader.GetDiagnosticMeta()
+	if err != nil {
+		return DiagnosticMeta{}, err
+	}
+
+	return meta, nil
 }

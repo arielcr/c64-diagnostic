@@ -28,6 +28,7 @@ func NewAPI(logger *slog.Logger, service *diagnostics.Service) *API {
 
 func (a *API) InitializeRoutes() {
 	a.Router.HandleFunc("/diagnose", a.Diagnose).Methods("POST")
+	a.Router.HandleFunc("/metadata", a.MetaData).Methods("GET")
 }
 
 func (a *API) Run(addr string) error {
@@ -65,6 +66,19 @@ func (a *API) Diagnose(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 
 	result, err := a.Service.GetNextStep(status)
+
+	if err != nil {
+		a.Log.Error("error parsing the diagnostic", "error", err.Error())
+		utils.RespondWithError(w, http.StatusBadRequest, "error parsing the diagnostic")
+	}
+
+	slog.Info("Diagnostic processed", "payload", result)
+
+	utils.RespondWithJSON(w, http.StatusOK, result)
+}
+
+func (a *API) MetaData(w http.ResponseWriter, r *http.Request) {
+	result, err := a.Service.GetMetaData()
 
 	if err != nil {
 		a.Log.Error("error parsing the diagnostic", "error", err.Error())
