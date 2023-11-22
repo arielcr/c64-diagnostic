@@ -1,8 +1,9 @@
 package diagnostics
 
 type Diagnostic struct {
-	ID    string `json:"id" validate:"required"`
-	Title string `json:"title" validate:"required"`
+	Finish      bool   `json:"finish"`
+	Description string `json:"description"`
+	Step        Step   `json:"step"`
 }
 
 type DiagnosticMeta struct {
@@ -16,7 +17,8 @@ type DiagnosticMeta struct {
 }
 
 type Step struct {
-	Step        int     `json:"step"`
+	Step        string  `json:"step"`
+	Diagnostic  string  `json:"diagnostic"`
 	Type        string  `json:"type"`
 	Category    string  `json:"category"`
 	Description string  `json:"description"`
@@ -37,12 +39,12 @@ type Success struct {
 
 type Next struct {
 	Category string `json:"category"`
-	Step     int    `json:"step"`
+	Step     string `json:"step"`
 }
 
 type DiagnosticStatus struct {
 	Diagnostic string  `json:"diagnostic" validate:"required"`
-	Step       int     `json:"step" validate:"required"`
+	Step       string  `json:"step" validate:"required"`
 	Result     string  `json:"result"`
 	Results    Results `json:"results"`
 }

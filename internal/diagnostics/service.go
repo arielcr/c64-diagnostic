@@ -7,7 +7,7 @@ import (
 )
 
 type Reader interface {
-	GetStep(diagnostic string, step int) (Step, error)
+	GetStep(diagnostic string, step string) (Step, error)
 	GetDiagnosticMeta() (DiagnosticMeta, error)
 }
 
@@ -25,35 +25,62 @@ func NewService(reader Reader, logger *slog.Logger) *Service {
 	return &newService
 }
 
-func (s *Service) GetNextStep(status DiagnosticStatus) (Step, error) {
-	s.Logger.Info("Service > GetNextStep", "status", status)
-
+func (s *Service) GetDiagnostic(status DiagnosticStatus) (Diagnostic, error) {
 	step, err := s.Reader.GetStep(status.Diagnostic, status.Step)
+
 	if err != nil {
-		return Step{}, err
+		return Diagnostic{}, err
 	}
 
+	return s.buildDiagnostic(status, step)
+}
+
+func (s *Service) buildDiagnostic(status DiagnosticStatus, step Step) (Diagnostic, error) {
 	if status.Result == "" {
-		return step, nil
+		return Diagnostic{
+			Step: step,
+		}, nil
 	}
 
 	if status.Result == constants.Yes {
+		if step.Success.Diagnostic != "" {
+			return Diagnostic{
+				Finish:      true,
+				Description: step.Success.Diagnostic,
+				Step:        step,
+			}, nil
+		}
+
 		nextStep, err := s.Reader.GetStep(step.Success.Next.Category, step.Success.Next.Step)
 		if err != nil {
-			return Step{}, err
+			return Diagnostic{}, err
 		}
-		return nextStep, nil
+
+		return Diagnostic{
+			Step: nextStep,
+		}, nil
 	}
 
 	if status.Result == constants.No {
+		if step.Error.Diagnostic != "" {
+			return Diagnostic{
+				Finish:      true,
+				Description: step.Error.Diagnostic,
+				Step:        step,
+			}, nil
+		}
+
 		nextStep, err := s.Reader.GetStep(step.Error.Next.Category, step.Error.Next.Step)
 		if err != nil {
-			return Step{}, err
+			return Diagnostic{}, err
 		}
-		return nextStep, nil
+
+		return Diagnostic{
+			Step: nextStep,
+		}, nil
 	}
 
-	return Step{}, nil
+	return Diagnostic{}, nil
 }
 
 func (s *Service) GetMetaData() (DiagnosticMeta, error) {

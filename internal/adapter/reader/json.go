@@ -26,7 +26,7 @@ func NewJsonReader(logger *slog.Logger) *JsonReader {
 	return &newJsonReader
 }
 
-func (r *JsonReader) GetStep(diagnostic string, stepNumber int) (diagnostics.Step, error) {
+func (r *JsonReader) GetStep(diagnostic string, stepNumber string) (diagnostics.Step, error) {
 	result := r.jq.Reset().From("diagnostics."+diagnostic).Where("step", "=", stepNumber).First()
 
 	step, err := r.ParseStepFromJSON(result)

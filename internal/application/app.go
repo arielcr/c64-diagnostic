@@ -65,11 +65,12 @@ func (a *API) Diagnose(w http.ResponseWriter, r *http.Request) {
 
 	defer r.Body.Close()
 
-	result, err := a.Service.GetNextStep(status)
+	result, err := a.Service.GetDiagnostic(status)
 
 	if err != nil {
 		a.Log.Error("error parsing the diagnostic", "error", err.Error())
 		utils.RespondWithError(w, http.StatusBadRequest, "error parsing the diagnostic")
+		return
 	}
 
 	slog.Info("Diagnostic processed", "payload", result)
