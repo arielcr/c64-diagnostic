@@ -9,7 +9,7 @@ import (
 	"github.com/arielcr/c64-diagnostic/internal/diagnostics"
 )
 
-const port = ":8081"
+const port = ":8080"
 
 func main() {
 	logger := InitializeLogger()
