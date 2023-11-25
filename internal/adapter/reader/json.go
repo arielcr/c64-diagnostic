@@ -10,17 +10,15 @@ import (
 	jsonq "github.com/thedevsaddam/gojsonq/v2"
 )
 
-const JSON_FILE_PATH = "./data/diagnostic.json"
-
 type JsonReader struct {
 	logger *slog.Logger
 	jq     *jsonq.JSONQ
 }
 
-func NewJsonReader(logger *slog.Logger) *JsonReader {
+func NewJsonReader(jsonFilePath string, logger *slog.Logger) *JsonReader {
 	newJsonReader := JsonReader{
 		logger: logger,
-		jq:     jsonq.New().File(JSON_FILE_PATH),
+		jq:     jsonq.New().File(jsonFilePath),
 	}
 
 	return &newJsonReader
