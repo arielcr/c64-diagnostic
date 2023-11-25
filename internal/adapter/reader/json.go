@@ -3,7 +3,9 @@ package reader
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"log/slog"
+	"net/http"
 
 	"github.com/arielcr/c64-diagnostic/internal/diagnostics"
 
@@ -20,10 +22,28 @@ type JsonReader struct {
 func NewJsonReader(logger *slog.Logger) *JsonReader {
 	newJsonReader := JsonReader{
 		logger: logger,
-		jq:     jsonq.New().File(jsonFilePath),
 	}
 
 	return &newJsonReader
+}
+
+func (r *JsonReader) SetDataSource(url string) error {
+	response, err := http.Get(url)
+	if err != nil {
+		return err
+	}
+	defer response.Body.Close()
+
+	body, err := io.ReadAll(response.Body)
+	if err != nil {
+		return err
+	}
+
+	jsonString := string(body)
+
+	r.jq = jsonq.New().FromString(jsonString)
+
+	return nil
 }
 
 func (r *JsonReader) GetStep(diagnostic string, stepNumber string) (diagnostics.Step, error) {
