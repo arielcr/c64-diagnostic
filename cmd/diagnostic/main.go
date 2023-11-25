@@ -13,17 +13,9 @@ import (
 const port = ":8080"
 
 func main() {
-
 	logger := InitializeLogger()
 
-	jsonFilePath, err := getJsonFilePath()
-	if err != nil {
-		slog.Error("JSON File path invalid", "error", err)
-		os.Exit(1)
-	}
-
-	slog.Info("JSON file path", "path", jsonFilePath)
-	reader := reader.NewJsonReader(jsonFilePath, logger)
+	reader := reader.NewJsonReader(logger)
 
 	service := diagnostics.NewService(reader, logger)
 
